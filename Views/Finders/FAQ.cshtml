@@ -1,0 +1,84 @@
+﻿@{
+    ViewBag.Title = "FAQs";
+}
+<style>
+    .faq-container {
+        background-color: #FFF2CC;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .faq-item {
+        margin-bottom: 20px;
+    }
+
+    .add-more-faq input,
+    .add-more-faq textarea {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .add-more-faq button {
+        background-color: #7353be;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+</style>
+
+<h2 style="font-weight:bold; text-align:center;">FAQs</h2>
+
+<div class="faq-container">
+
+    <div class="faq-item" style="margin-bottom: 20px;">
+        <h4>Does Finders have a physical store?</h4>
+        <p>No, Finders operates entirely online as a digital platform connecting businesses and customers.</p>
+    </div>
+
+    <div class="faq-item" style="margin-bottom: 20px;">
+        <h4>Why can I not pay on the App?</h4>
+        <p>Finders focuses on connecting customers with businesses. Payment is handled directly between the customer and the business after booking or service arrangements.</p>
+    </div>
+
+    <div class="faq-item" style="margin-bottom: 20px;">
+        <h4>How do I contact businesses for services?</h4>
+        <p>You can reach out to businesses through their profile page on Finders, where you'll find contact information or a messaging option.</p>
+    </div>
+
+    <div class="add-more-faq" style="margin-top: 30px;">
+        <input type="text" id="faq-question" placeholder="Enter question" required />
+        <textarea id="faq-answer" placeholder="Enter answer" required></textarea>
+        <button id="add-faq-btn">
+            Add
+        </button>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('add-faq-btn').addEventListener('click', function () {
+            var question = document.getElementById('faq-question').value;
+            var answer = document.getElementById('faq-answer').value;
+
+            if (question && answer) {
+                var newFaq = `
+                        <div class="faq-item" style="margin-bottom: 20px;">
+                            <h4>${question}</h4>
+                            <p>${answer}</p>
+                        </div>
+                    `;
+                document.querySelector('.faq-container').insertAdjacentHTML('beforeend', newFaq);
+
+                // Clear input fields
+                document.getElementById('faq-question').value = '';
+                document.getElementById('faq-answer').value = '';
+            }
+        });
+    });
+</script>

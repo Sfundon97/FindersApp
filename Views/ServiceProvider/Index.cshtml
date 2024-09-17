@@ -1,0 +1,124 @@
+﻿@model IEnumerable<Finders.Models.ServiceProvider>
+
+@{
+    ViewData["Title"] = "Service Providers";
+}
+
+<style>
+    h2 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 30px;
+    }
+
+    .my-table {
+        width: 100%;
+        border-collapse: collapse;
+        border-radius: 5px;
+        overflow: hidden;
+        box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+    }
+
+        .my-table th, .my-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .my-table th {
+            background-color: gray;
+            color: #fff;
+        }
+
+        .my-table tbody tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .my-table tbody tr:hover {
+            background-color: #e9ecef;
+        }
+
+    .search-container {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+
+    .search-input {
+        padding: 10px;
+        width: 300px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+
+    .search-button {
+        padding: 10px 15px;
+        margin-left: 10px;
+        background-color: gray;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .btn-back {
+        padding: 10px 15px;
+        margin-left: 10px;
+        background-color: gray;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .search-button:hover {
+        background-color: #555;
+    }
+</style>
+
+<h2>Service Provider Database</h2>
+
+<!-- Search Form -->
+<div class="search-container">
+    <form asp-action="Index" method="get">
+        <input type="text" name="searchCompany" class="search-input" placeholder="Search by Company" value="@ViewData["CurrentFilter"]" />
+        <button type="submit" class="search-button">Search</button>
+    </form>
+    <form asp-action="Index" method="get">
+        <button type="submit" class="btn-back">
+            Back
+        </button>
+    </form>
+</div>
+
+<table class="table my-table">
+    <thead>
+        <tr>
+            <th>Business Name</th>
+            <th>Category</th>
+            <th>Email</th>
+            <th>Date Joined</th>
+            <th>Reg. Number</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td style="margin:5px;">
+                    <img src="@WebConstants.ImagePath@item.Photo" width="50" height="50" style="border-radius: 50%; margin:5px;" />
+                    @item.CompanyName
+                </td>
+                <td>@item.Category</td>
+                <td>@item.Email</td>
+                <td>@item.DateJoined</td>
+                <td>@item.RegistrationNumber</td>
+                <td>
+                    <a asp-action="Service" asp-route-company="@item.CompanyName">View</a> |
+                    <a asp-action="Details" asp-route-company="@item.CompanyName">View Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

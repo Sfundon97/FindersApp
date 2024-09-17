@@ -1,0 +1,137 @@
+﻿@model Finders.Models.ServiceProvider
+
+@{
+    ViewBag.Title = "Service Provider Profile";
+}
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: space-between;
+        padding: 20px;
+    }
+
+    .profile-container {
+        width: 40%;
+        display: flex;
+        align-items: flex-start;
+    }
+
+        .profile-container img {
+            width: 150px;
+            height: 150px;
+            background-color: #ccc;
+            margin-right: 20px;
+        }
+
+    .profile-details {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+
+        .profile-details h2,
+        .profile-details h3 {
+            margin: 0;
+            font-weight: bold;
+        }
+
+        .profile-details p {
+            margin: 5px 0;
+        }
+
+    .stars {
+        display: flex;
+        align-items: center;
+        font-size: 20px;
+    }
+
+        .stars span {
+            color: #FFD700;
+        }
+
+    .reviews-link {
+        color: blue;
+        text-decoration: underline;
+        cursor: pointer;
+    }
+
+    .appointment-links a {
+        display: block;
+        margin-top: 10px;
+        color: black;
+        text-decoration: none;
+    }
+
+    .feedback-container {
+        width: 40%;
+        background-color: #87CEEB;
+        border-radius: 20px;
+        padding: 20px;
+    }
+
+        .feedback-container h3 {
+            text-align: center;
+            font-weight: bold;
+        }
+
+    .feedback-item {
+        display: flex;
+        align-items: center;
+        margin-top: 20px;
+    }
+
+        .feedback-item img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 15px;
+        }
+
+        .feedback-item hr {
+            width: 100%;
+            border: 0.5px solid black;
+        }
+</style>
+
+<body>
+
+    <!-- Profile Section -->
+    <div class="profile-container">
+        <img src="placeholder-image.jpg" alt="Profile Image">
+        <div class="profile-details">
+            <h2>NOMONDE BEAUTY</h2>
+            <h3>make up your mind</h3>
+            <p>Bloemfontein, Willows</p>
+            <p>Phone nr:</p>
+            <p>Registration Nr:</p>
+            <div class="stars">
+                <span>&#9733;</span>
+                <span>&#9733;</span>
+                <span>&#9733;</span>
+                <span>&#9733;</span>
+                <span>&#9734;</span> <!-- Empty Star -->
+            </div>
+            <p><a class="reviews-link">REVIEWS (151)</a></p>
+            <div class="appointment-links">
+                <a href="">View Profile &gt;&gt;&gt;</a>
+                <a href="#">View Appointments &gt;&gt;&gt;</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Feedback Section -->
+    <div class="feedback-container">
+        <h3>feedback</h3>
+        <div class="feedback-item">
+            <img src="user-image.jpg" alt="User Image">
+            <p>Ntima MAbanza</p>
+        </div>
+        <hr />
+        <hr />
+        <hr />
+        <hr />
+    </div>
+
+</body>

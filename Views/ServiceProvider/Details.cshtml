@@ -1,0 +1,214 @@
+﻿@model Finders.Models.ServiceProvider
+
+@{
+    ViewData["Title"] = "Service Provider Details";
+}
+
+<!-- Custom Styles -->
+<style>
+    
+    .container {
+        text-align: center;
+        font-family: Arial, sans-serif;
+    }
+
+   
+    .banner {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 20px;
+        border-radius: 10px;
+        overflow: hidden;
+        background-color: navy;
+        border: double #000096;
+    }
+
+        .banner img {
+            width: 100%;
+            height: 150px;
+            
+        }
+
+    .services-table {
+        width: 60%;
+        margin: 0 auto;
+        border-collapse: collapse;
+        background-color: #FFF2CC;
+    }
+
+        .services-table td, .services-table th {
+            padding: 10px;
+            border-bottom: 1px solid #FFF2CC;
+            text-align:left;
+        }
+
+        .services-table th {
+            background-color: #FFF2CC;
+            font-weight: bold;
+        }
+
+    /* Back Button */
+    .button-container {
+        display: flex;
+        justify-content: center;
+        margin-top: 30px;
+    }
+
+    .back-btn {
+        background-color: #B0BCC5;
+        color: white;
+        padding: 12px 24px;
+        border-radius: 50px;
+        border: none;
+        font-weight: bold;
+        cursor: pointer;
+        text-transform: uppercase;
+        display: flex;
+        align-items: center;
+    }
+
+    /* Profile Image */
+    .profile-img {
+        border-radius: 10px;
+        width: 100px;
+        height: 100px;
+        margin-top: 10px;
+    }
+
+    .company-name {
+        font-size: 30px;
+        font-weight: bold;
+        margin: 0;
+    }
+
+    .address {
+        color: gray;
+        font-size: 14px;
+    }
+
+    /* Confirmation Popup */
+    #confirmationPopup {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .popup-content {
+        background-color: #C4C4C4;
+        border-radius: 20px;
+        padding: 20px;
+        width: 300px;
+        text-align: center;
+    }
+
+    /* Service Details */
+    .service-detail {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 0;
+        font-size: 16px;
+    }
+</style>
+
+<div class="container">
+    <!-- Header and Profile Image -->
+    <div style="display: flex; align-items: center; gap: 20px; justify-content: center;">
+        @*<img src="@WebConstants.ImagePath@Model.Photo" class="profile-img" alt="Profile Photo"> *@
+        <div>
+            <h1 class="company-name">@Model.CompanyName</h1>
+            <p class="address">@Model.Address</p>
+        </div>
+    </div>
+
+    <!-- Banner Section -->
+    <div class="banner">
+        <img src="~/images/findder1.jpeg" alt="Service Image 1">
+        <img src="~/images/findder2.jpeg" alt="Service Image 2">
+        <img src="~/images/finder3.jpeg" alt="Service Image 3">
+        <img src="~/images/finders.png" alt="Service Image 4">
+    </div>
+    <hr />
+    <!-- Services Table -->
+    <table class="services-table">
+        <thead>
+            <tr>
+                <th>Service</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Manicure</td>
+                <td>R250</td>
+            </tr>
+            <tr>
+                <td>Weave Install</td>
+                <td>R850</td>
+            </tr>
+            <tr>
+                <td>Make Up</td>
+                <td>R300</td>
+            </tr>
+            <tr>
+                <td>Pedicure</td>
+                <td>R300</td>
+            </tr>
+            <tr>
+                <td>Massage</td>
+                <td>R650</td>
+            </tr>
+            <tr>
+                <td>Facial</td>
+                <td>R650</td>
+            </tr>
+        </tbody>
+    </table>
+
+
+    <!-- Back Button -->
+    <div class="button-container" style="display: flex; gap: 100px;">
+        <form asp-action="Index" method="get" class="d-inline">
+            <button type="submit" class="back-btn" style="padding: 10px 20px; font-weight: bold; text-transform: uppercase;">
+                &#8592; Back
+            </button>
+        </form>
+        <button type="button" class="btn" style="background-color: #FF3B30; color: white; border: none; border-radius: 50px; padding: 10px 20px; font-weight: bold; text-transform: uppercase;" onclick="showConfirmation()">Delete</button>
+    </div>
+
+
+
+    <!-- Confirmation Pop-up -->
+    <div id="confirmationPopup">
+        <div class="popup-content">
+            <p style="font-weight: bold;">ARE YOU SURE YOU WANT TO DELETE THIS?</p>
+            <hr style="border: 1px solid black; margin: 10px 0;">
+            <div style="display: flex; justify-content: space-between;">
+                <button onclick="hideConfirmation()" style="border: none; background: none; color: #4A5768; font-weight: bold;">NO</button>
+                <div style="border-left: 1px solid black; height: 20px;"></div>
+                <form asp-action="Delete" asp-route-company="@Model.CompanyName" method="post" class="d-inline">
+                    <button type="submit" style="border: none; background: none; color: #FF3B30; font-weight: bold;">YES</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Confirmation Popup Script -->
+<script>
+    function showConfirmation() {
+        document.getElementById('confirmationPopup').style.display = 'flex';
+    }
+
+    function hideConfirmation() {
+        document.getElementById('confirmationPopup').style.display = 'none';
+    }
+</script>

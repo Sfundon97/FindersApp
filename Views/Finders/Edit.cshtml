@@ -1,0 +1,88 @@
+﻿<!--
+    Programmer name: S Nondwatyu
+    Student nr: 220036624
+    Assignment nr: GA1
+    Purpose: This Razor view represents the "Edit" page for modifying the details of a specific student record.
+             It displays a form with input fields for editing student information including student number, first name,
+             surname, enrollment date, email, and photo. Users can upload a new photo for the student.
+             After making changes, users can save the modifications or return to the details page without saving.
+-->
+@model Finders.Models.Finder
+
+@{
+    ViewData["Title"] = "Edit";
+}
+<style>
+    body {
+        margin-bottom: 80px; 
+    }
+
+</style>
+<h1>Edit</h1>
+
+<h4>User</h4>
+<hr />
+<body>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit"  enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="RegNumber" />
+            <div class="form-group">
+                <label asp-for="RegNumber" class="control-label"></label>
+                <input asp-for="RegNumber" class="form-control" />
+                <span asp-validation-for="RegNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FirstName" class="control-label"></label>
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Surname" class="control-label"></label>
+                <input asp-for="Surname" class="form-control" />
+                <span asp-validation-for="Surname" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Phone" class="control-label"></label>
+                <input asp-for="Phone" class="form-control" />
+                <span asp-validation-for="Phone" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    Photo
+                    <input type="hidden" value="@Model.Photo" id="PhotoName"/>
+                    <img src="@WebConstants.ImagePath@Model.Photo" width="100" style="border-bottom-left-radius: 5px; border: 1px solid white;" />
+                </div>
+            </div>
+            <br />
+            <div class="form-group row">
+                <div class="col-8">
+                    <input type="file" name="files" id="uploadBox" multiple class="form-control" />
+                </div>
+            </div>
+            <br />
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Details">Back to Details</a>
+</div>
+</body>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
