@@ -2,27 +2,24 @@
 using Google.Cloud.Firestore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Finders.Controllers
 {
-    public class ServiceProviderController : Controller
+    public class CIPCController : Controller
     {
         private readonly FirestoreDb _firestoreDb;
         private readonly FirebaseStorageService _firebaseStorageService;
 
-        public ServiceProviderController(FirebaseStorageService firebaseStorageService)
+        public CIPCController(FirebaseStorageService firebaseStorageService)
         {
             _firestoreDb = FirestoreConfig.InitializeFirestore();
             _firebaseStorageService = firebaseStorageService;
         }
 
-        // Index method for basic retrieval of all documents
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Index(string searchCompany)
         {
-            var collection = _firestoreDb.Collection("Service Provider");
+            var collection = _firestoreDb.Collection("CIPC");
             Query query = collection;
 
             // Apply filter if searchSurname is provided
@@ -30,14 +27,14 @@ namespace Finders.Controllers
             {
                 query = collection.WhereEqualTo("companyName", searchCompany);
             }
-            
-            var querySnapshot = await query.GetSnapshotAsync();
 
-            var serviceProviders = querySnapshot.Documents
-                .Select(doc => doc.ConvertTo<Models.ServiceProvider>())
-                .ToList();
+            var querySnapshot = await query.GetSnapshotAsync();
+            var clients = querySnapshot.Documents.Select(doc => doc.ConvertTo<Models.CIPCModel>()).ToList();
+
+            // Pass the search term back to the view to maintain it in the search box
             ViewData["CurrentFilter"] = searchCompany;
-            return View(serviceProviders);
+
+            return View(clients);
         }
 
         public async Task<IActionResult> GetImage(string fileName)
@@ -65,14 +62,14 @@ namespace Finders.Controllers
 
         private async Task<IActionResult> GetServiceProviderByCompanyName(string company)
         {
-            var collection = _firestoreDb.Collection("Service Provider");
+            var collection = _firestoreDb.Collection("CIPC");
             var query = collection.WhereEqualTo("companyName", company);
             var querySnapshot = await query.GetSnapshotAsync();
 
             if (querySnapshot.Documents.Count > 0)
             {
                 var documentSnapshot = querySnapshot.Documents.FirstOrDefault();
-                var client = documentSnapshot.ConvertTo<Models.ServiceProvider>();
+                var client = documentSnapshot.ConvertTo<CIPCModel>();
                 return View(client);
             }
             else
@@ -84,7 +81,7 @@ namespace Finders.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(string company)
         {
-            var collection = _firestoreDb.Collection("Service Provider");
+            var collection = _firestoreDb.Collection("CIPC");
             var query = collection.WhereEqualTo("companyName", company);
             var querySnapshot = await query.GetSnapshotAsync();
 

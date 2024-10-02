@@ -6,6 +6,7 @@ using Finders.Data;
 using Finders.Interfaces;
 using Finders.Models;
 using Finders.Repositories;
+using Google.Api;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
@@ -17,6 +18,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddSingleton(provider =>
+{
+    var firebaseStorageUrl = "gs://findersmvc.appspot.com"; 
+    var apiKey = "AIzaSyB1VfcMZg9QhMu-Xbx8uipRAlPy3qi8Bd8";
+    return new FirebaseStorageService(firebaseStorageUrl, apiKey);
+});
 builder.Services.AddRazorPages();
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>

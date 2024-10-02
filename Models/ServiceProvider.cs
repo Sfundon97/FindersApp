@@ -1,4 +1,5 @@
-﻿using Google.Cloud.Firestore;
+﻿using Firebase.Storage;
+using Google.Cloud.Firestore;
 
 namespace Finders.Models
 {
@@ -14,8 +15,12 @@ namespace Finders.Models
         [FirestoreProperty("companyName")]
         public string CompanyName { get; set; }
 
-       public string  Rating { get; set; }
+        public string Rating { get; set; }
+
+        [FirestoreProperty("photo")]
         public string Photo { get; set; }
+        public string PhotoUrl { get; set; }
+        public string ContentType {  get; set; }
 
         [FirestoreProperty("dateJoined")]
         public DateTime DateJoined { get; set; }
@@ -28,5 +33,39 @@ namespace Finders.Models
 
         [FirestoreProperty("service")]
         public string Service { get; set; }
+    }
+
+    public class FirebaseStorageService
+    {
+        private readonly string _firebaseStorageUrl;
+        private readonly string _apiKey;
+
+        public FirebaseStorageService(string firebaseStorageUrl, string apiKey)
+        {
+            _firebaseStorageUrl = firebaseStorageUrl ?? throw new ArgumentNullException(nameof(firebaseStorageUrl));
+            _apiKey = apiKey ?? throw new ArgumentNullException(nameof(apiKey));
+        }
+
+        public async Task<string> GetImageUrlAsync(string imagePath)
+        {
+            try
+            {
+                var storage = new FirebaseStorage(_firebaseStorageUrl, new FirebaseStorageOptions
+                {
+                    AuthTokenAsyncFactory = () => Task.FromResult(_apiKey)
+                });
+
+                // Get the download URL for the image
+                var url = await storage.Child(imagePath).GetDownloadUrlAsync();
+                Console.WriteLine($"Retrieved URL: {url}"); // Log the URL
+                return url;
+            }
+            catch (Exception ex)
+            {
+                // Consider using a logging framework instead of Console.WriteLine
+                Console.WriteLine($"Error retrieving image URL: {ex.Message}");
+                return null;
+            }
+        }
     }
 }

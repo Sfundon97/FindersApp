@@ -1,7 +1,7 @@
-﻿@model IEnumerable<Finders.Models.ClientModel>
+﻿@model IEnumerable<Finders.Models.CIPCModel>
 
 @{
-    ViewData["Title"] = "Clients";
+    ViewData["Title"] = "CIPC";
 }
 
 <style>
@@ -60,6 +60,7 @@
         border-radius: 5px;
         cursor: pointer;
     }
+
     .btn-back {
         padding: 10px 15px;
         margin-left: 10px;
@@ -70,17 +71,17 @@
         cursor: pointer;
     }
 
-        .search-button:hover {
-            background-color: #555;
-        }
+    .search-button:hover {
+        background-color: #555;
+    }
 </style>
 
-<h2>Client Database</h2>
+<h2>CIPC Database</h2>
 
 <!-- Search Form -->
 <div class="search-container">
     <form asp-action="Index" method="get">
-        <input type="text" name="searchSurname" class="search-input" placeholder="Search by Surname" value="@ViewData["CurrentFilter"]" />
+        <input type="text" name="searchCompany" class="search-input" placeholder="Search by Company" value="@ViewData["CurrentFilter"]" />
         <button type="submit" class="search-button">Search</button>
     </form>
     <form asp-action="Index" method="get">
@@ -93,10 +94,11 @@
 <table class="table my-table">
     <thead>
         <tr>
-            <th>Name</th>
-            <th>Surname</th>
+            <th>Company Name</th>
+            @* <th>Category</th> *@
             <th>Email</th>
-            <th>Address</th>
+            <th>Date Joined</th>
+            <th>Reg. Number</th>
             <th>Action</th>
         </tr>
     </thead>
@@ -104,15 +106,25 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td>
-                    <img src="~/images/DefaultPic.png" width="50" height="50" style="border-radius: 50%; margin:5px;" />
-                    @item.FirstName
+                <td style="margin:5px;">
+                    @if (!string.IsNullOrEmpty(item.Photo))
+                    {
+                        <img src="@item.Photo" alt="Service Provider Image" style="width: 100px; height: auto;" />
+                    }
+                    else
+                    {
+                        <img src="~/images/DefaultPic.png" alt="Default Image" style="width: 100px; height: auto;" />
+                    }
+                    @item.CompanyName
+
                 </td>
-                <td>@item.Surname</td>
+                @* <td>@item.Category</td> *@
                 <td>@item.Email</td>
-                <td>@item.Address</td>
+                <td>@item.DateJoined.ToShortDateString()</td>
+                <td>@item.RegistrationNumber</td>
                 <td>
-                    <a asp-action="Details" asp-route-surname="@item.Surname">View Details</a>
+                    <a asp-action="Service" asp-route-company="@item.CompanyName" style="border: none; background: none; color: blueviolet; font-weight: bold;">Services</a> |
+                    <a asp-action="Details" asp-route-company="@item.CompanyName" style="border: none; background: none; color: #FF3B30; font-weight: bold;">View Profile</a>
                 </td>
             </tr>
         }

@@ -10,6 +10,7 @@ namespace Finders.Models
     {
         public static FirestoreDb InitializeFirestore()
         {
+
             // Path to our service account key file
             var serviceAccountPath = "C:/Users/Sfundo Nondwatyu/Downloads/findersmvc-6bb72e6bb8f9.json";
 

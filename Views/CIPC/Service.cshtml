@@ -1,11 +1,11 @@
-﻿@model Finders.Models.ServiceProvider
+﻿@model Finders.Models.CIPCModel
 
 @{
-    ViewBag.Title = "Service Provider Profile";
+    ViewBag.Title = "Service Provider Services";
 }
 
 <style>
-    
+
 
     .profile-container {
         width: 40%;
@@ -107,7 +107,7 @@
         display: flex;
         align-items: center;
     }
-    
+
     #confirmationPopup {
         display: none;
         position: fixed;
@@ -130,42 +130,42 @@
     }
 </style>
 
-   <h1 style="text-align: center;">Feedback</h1>
-    <div class="profile-container">
-    <img src="@Model.Photo" alt="Profile Image" style="max-width: 100%; height: auto; border-radius: 50%;"/>
-        <div class="profile-details">
-            <h2>NOMONDE BEAUTY</h2>
-            <h3>make up your mind</h3>
-            <p>Bloemfontein, Willows</p>
-            <p>Phone nr: @Model.</p>
-            <p>Registration Nr:</p>
-            <div class="stars">
-                <span>&#9733;</span>
-                <span>&#9733;</span>
-                <span>&#9733;</span>
-                <span>&#9733;</span>
-                <span>&#9734;</span> 
-            </div>
-            <p><a class="reviews-link">REVIEWS (151)</a></p>
-            <div class="appointment-links">
-           <a asp-action="Details" asp-route-company="@Model.CompanyName">View Details</a>
-                <a asp-action="Index" asp-controller="Home">View Appointments>>></a>
-            </div>
+<h1 style="text-align: center;">Feedback</h1>
+<div class="profile-container">
+    <img src="@Model.Photo" alt="Profile Image" style="max-width: 100%; height: auto; border-radius: 50%;" />
+    <div class="profile-details">
+        <h2>NOMONDE BEAUTY</h2>
+        <h3>make up your mind</h3>
+        <p>Bloemfontein, Willows</p>
+        <p>Phone nr: @Model.</p>
+        <p>Registration Nr:</p>
+        <div class="stars">
+            <span>&#9733;</span>
+            <span>&#9733;</span>
+            <span>&#9733;</span>
+            <span>&#9733;</span>
+            <span>&#9734;</span>
+        </div>
+        <p><a class="reviews-link">REVIEWS (151)</a></p>
+        <div class="appointment-links">
+            <a asp-action="Details" asp-route-company="@Model.CompanyName">View Details</a>
+            <a asp-action="Index" asp-controller="Home">View Appointments>>></a>
         </div>
     </div>
+</div>
 
-    <!-- Feedback Section -->
-    <div class="feedback-container">
-        <h3>feedback</h3>
-        <div class="feedback-item">
+<!-- Feedback Section -->
+<div class="feedback-container">
+    <h3>feedback</h3>
+    <div class="feedback-item">
         <img src="~/images/DefaultPic.png" alt="Image from Firebase" style="max-width: 100%; height: auto;" />
-            <p>John Mabanza</p>
-        </div>
-        <hr />
-        <hr />
-        <hr />
-        <hr />
+        <p>John Mabanza</p>
     </div>
+    <hr />
+    <hr />
+    <hr />
+    <hr />
+</div>
 
 <div class="button-container" style="display: flex; gap: 100px;">
     <form asp-action="Index" method="get" class="d-inline">
