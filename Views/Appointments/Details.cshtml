@@ -1,0 +1,113 @@
+﻿@model Finders.Models.Appointments
+
+@{
+    ViewData["Title"] = "Appointment Details";
+}
+
+<div style="display: flex; justify-content: space-between; padding: 0px; border-bottom: 2px solid #000;">
+    <!-- Service Provider Details (Left) -->
+    <div style="padding-top: 80px; padding-bottom 0px";>
+        <strong>@Model.CompanyName</strong><br />
+        @Model.Address<br />
+        <span>@Model.ClientEmail</span><br />
+        <span>@Model.ClientPhone</span>
+    </div>
+
+    <!-- Appointment Title -->
+    <div style="text-align: center; font-size: 18px; font-weight: bold; margin-top: 20px;">
+        APPOINTMENT DETAILS
+    </div>
+
+    <!-- Client Details (Right) -->
+    <div style="text-align: right; padding-top: 80px; padding-bottom: 0px;">
+        <strong>@Model.ClientName @Model.Surname</strong><br />
+        Ref: @ViewBag.DocumentId<br />
+        <span>@Model.ClientEmail</span><br />
+        <span>@Model.ClientPhone</span>
+    </div>
+
+</div>
+
+<!-- Appointment Table -->
+<table style="width: 100%; margin-top: 20px; border-collapse: collapse; font-size: 16px;">
+    <thead>
+        <tr style="border-bottom: 2px solid #000;">
+            <th style="padding: 10px;">DATE</th>
+            <th style="padding: 10px;">DESCRIPTION</th>
+            <th style="padding: 10px;">PRICE</th>
+            <th style="padding: 10px;">QUANTITY</th>
+            
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td style="padding: 10px;">@Model.Date.ToString("dd MMMM yyyy")</td>
+            <td style="padding: 10px;">
+                @foreach (var service in Model.Services)
+                {
+                    <div>@service</div>
+                }
+            </td>
+            <td style="padding: 10px;">
+                @foreach (var price in Model.Prices)
+                {
+                    <div>@price.ToString("C")</div>
+                }
+            </td>
+            <td style="padding: 10px;">
+                @foreach (var quantity in Model.Quantity)
+                {
+                    <div>@quantity</div>
+                }
+            </td>
+        </tr>
+        <!-- You can repeat the row for each service/price/quantity item -->
+    </tbody>
+</table>
+
+<!-- Total Amount Section -->
+<div style="text-align: right; padding: 20px; font-size: 24px; font-weight: bold;">
+    TOTAL AMOUNT: @Model.TotalPrice.ToString("C")
+</div>
+
+<!-- Back Button -->
+<div style="text-align: left; padding: 20px;">
+    <a href="@Url.Action("Index", "Appointments")" class="btn btn-secondary">
+        BACK
+    </a>
+</div>
+
+<style>
+    .my-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+        .my-table th, .my-table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+        }
+
+        .my-table th {
+            background-color: #f4f4f4;
+            text-align: left;
+        }
+
+    .serviceProviderLeft, .clientRight {
+        width: 40%;
+    }
+
+    .clientRight {
+        text-align: right;
+    }
+
+    .btn-secondary {
+        background-color: #ccc;
+        border: none;
+        padding: 10px 20px;
+        text-decoration: none;
+        color: #000;
+        border-radius: 5px;
+    }
+</style>

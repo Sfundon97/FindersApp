@@ -8,7 +8,15 @@
 
 <div style="display: flex; align-items: center; gap: 20px;">
     <!-- Profile Image -->
-    <img src="~/images/DefaultPic.png" width="100" alt="Profile Photo" style="border-radius: 10px;">
+    @if (Model.Photo == null)
+    {
+        <img src="@Model.DefaultPhoto width="100" alt="Profile Photo" style="border-radius: 10px;" />
+    }
+    else
+    {
+        <img src="@Model.Photo width="100" alt="Profile Photo" style="border-radius: 10px;">
+    }
+    
 
     <!-- Name and Email Section -->
     <div>

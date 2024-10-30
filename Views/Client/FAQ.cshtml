@@ -1,0 +1,74 @@
+﻿@model IEnumerable<Finders.Models.FAQModel>
+@{
+    ViewBag.Title = "FAQs";
+}
+<style>
+    .faq-container {
+        background-color: #FFF2CC;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .faq-item {
+        margin-bottom: 20px;
+    }
+
+    .add-more-faq input,
+    .add-more-faq textarea {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .add-more-faq button {
+        background-color: cornflowerblue;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .add-more-faq {
+        margin-top: 30px; /* Space between FAQs and the form */
+    }
+</style>
+
+<h2 style="font-weight:bold; text-align:center;">FAQs</h2>
+
+<div class="faq-container">
+    @* Display existing FAQs *@
+    @if (Model != null && Model.Any())
+    {
+        foreach (var faq in Model)
+        {
+            <div class="faq-item">
+                <h4>@faq.Question</h4>
+                <p>@faq.Answer</p>
+            </div>
+        }
+    }
+    else
+    {
+        <p>No FAQs available at the moment.</p>
+    }
+
+    <div class="add-more-faq">
+        <form method="post" asp-action="AddFAQ">
+            <input type="text" id="faq-question" name="question" placeholder="Enter question" required />
+            <textarea id="faq-answer" name="answer" placeholder="Enter answer" required></textarea>
+            <button type="submit">
+                Add FAQ
+            </button>
+        </form>
+    </div>
+
+    @* Display success or error messages *@
+   
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <p style="color: red;">@TempData["ErrorMessage"]</p>
+    }
+</div>

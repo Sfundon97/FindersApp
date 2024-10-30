@@ -130,11 +130,12 @@
 
     <!-- Banner Section -->
     <div class="banner">
-        <img src="~/images/findder1.jpeg" alt="Service Image 1">
-        <img src="~/images/findder2.jpeg" alt="Service Image 2">
-        <img src="~/images/finder3.jpeg" alt="Service Image 3">
-        <img src="~/images/finders.png" alt="Service Image 4">
+        @foreach (var imageUrl in Model.Images)
+        {
+            <img src="@imageUrl" alt="Service Provider Image" class="banner-image" />
+        }
     </div>
+
     <hr />
     <!-- Services Table -->
     <table class="services-table">
@@ -146,29 +147,11 @@
         </thead>
         <tbody>
             <tr>
-                <td>Manicure</td>
-                <td>R250</td>
+                <td>@Model.Service</td>
+                <td>@Model.Price.Value.ToString("C")</td>
+
             </tr>
-            <tr>
-                <td>Weave Install</td>
-                <td>R850</td>
-            </tr>
-            <tr>
-                <td>Make Up</td>
-                <td>R300</td>
-            </tr>
-            <tr>
-                <td>Pedicure</td>
-                <td>R300</td>
-            </tr>
-            <tr>
-                <td>Massage</td>
-                <td>R650</td>
-            </tr>
-            <tr>
-                <td>Facial</td>
-                <td>R650</td>
-            </tr>
+           
         </tbody>
     </table>
 

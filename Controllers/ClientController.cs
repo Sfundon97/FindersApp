@@ -17,6 +17,68 @@ namespace Finders.Controllers
             _firestoreDb = FirestoreConfig.InitializeFirestore();
         }
 
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> AddFAQ(string question, string answer)
+        {
+            if (string.IsNullOrEmpty(question) || string.IsNullOrEmpty(answer))
+            {
+                // Handle invalid input
+                TempData["ErrorMessage"] = "Question and Answer cannot be empty.";
+                return RedirectToAction("FAQ"); // Redirect to the FAQ action to reload the page
+            }
+
+            // Create a new FAQ object to store in Firestore
+            var faq = new
+            {
+                Question = question,
+                Answer = answer,
+            };
+
+            // Reference to your Firestore collection
+            var collection = _firestoreDb.Collection("FAQs");
+
+            // Add the new FAQ to Firestore
+            await collection.AddAsync(faq);
+
+            // Store the success message in TempData to show after redirect
+            TempData["SuccessMessage"] = "FAQ added successfully!";
+
+            // Redirect to the FAQ action to reload the page
+            return RedirectToAction("FAQ");
+        }
+
+
+
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> FAQ()
+        {
+            var faqsList = new List<FAQModel>();
+
+            // Fetch the collection for FAQs
+            var collection = _firestoreDb.Collection("FAQs");
+
+            // Get all documents in the collection
+            var querySnapshot = await collection.GetSnapshotAsync();
+
+            if (querySnapshot.Documents.Count > 0)
+            {
+                foreach (var document in querySnapshot.Documents)
+                {
+                    var faq = document.ConvertTo<FAQModel>();  // Convert each document to your FAQ model
+                    faqsList.Add(faq);
+                }
+            }
+
+            // Pass the retrieved FAQs to the view
+            return View(faqsList);
+        }
+
+
+
+
+
         // Index method with search functionality
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Index(string searchSurname)

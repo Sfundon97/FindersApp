@@ -3,6 +3,7 @@ using Google.Cloud.Firestore;
 using Google.Cloud.Firestore.V1;
 using Grpc.Auth;
 using Grpc.Core;
+using System;
 
 namespace Finders.Models
 {
@@ -12,7 +13,7 @@ namespace Finders.Models
         {
 
             // Path to our service account key file
-            var serviceAccountPath = "C:/Users/Sfundo Nondwatyu/Downloads/findersmvc-6bb72e6bb8f9.json";
+            var serviceAccountPath = "C:\\Users\\Sfundo Nondwatyu\\OneDrive\\Documents\\FindersApp\\findersmvc-9f3ec73a6f5e.json";
 
             // Load the credentials from the service account JSON file
             GoogleCredential googleCredential = GoogleCredential.FromFile(serviceAccountPath);

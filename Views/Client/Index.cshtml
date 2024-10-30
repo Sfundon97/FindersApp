@@ -60,6 +60,7 @@
         border-radius: 5px;
         cursor: pointer;
     }
+
     .btn-back {
         padding: 10px 15px;
         margin-left: 10px;
@@ -70,9 +71,30 @@
         cursor: pointer;
     }
 
-        .search-button:hover {
-            background-color: #555;
+    .search-button:hover {
+        background-color: #555;
+    }
+
+    /* Pagination buttons */
+    .pagination-buttons {
+        text-align: center;
+        margin: 20px 0;
+    }
+
+        .pagination-buttons button {
+            padding: 10px 20px;
+            background-color: gray;
+            color: white;
+            border: none;
+            margin: 0 5px;
+            cursor: pointer;
+            border-radius: 5px;
         }
+
+            .pagination-buttons button[disabled] {
+                background-color: lightgray;
+                cursor: not-allowed;
+            }
 </style>
 
 <h2>Client Database</h2>
@@ -84,9 +106,7 @@
         <button type="submit" class="search-button">Search</button>
     </form>
     <form asp-action="Index" method="get">
-        <button type="submit" class="btn-back">
-            Back
-        </button>
+        <button type="submit" class="btn-back">Back</button>
     </form>
 </div>
 
@@ -100,12 +120,20 @@
             <th>Action</th>
         </tr>
     </thead>
-    <tbody>
+    <tbody id="clientTable">
         @foreach (var item in Model)
         {
             <tr>
                 <td>
-                    <img src="~/images/DefaultPic.png" width="50" height="50" style="border-radius: 50%; margin:5px;" />
+                    @if (item.Photo == null)
+                    {
+                        <img src="@item.DefaultPhoto width="50" height="50" style="border-radius: 50%; margin:5px;" />
+                    }
+                    else
+                    {
+                        <img src="@item.Photo" width="50" height="50" style="border-radius: 50%; margin:5px;" />
+                    }
+                    
                     @item.FirstName
                 </td>
                 <td>@item.Surname</td>
@@ -118,3 +146,54 @@
         }
     </tbody>
 </table>
+
+<!-- Pagination Controls -->
+<div class="pagination-buttons">
+    <button id="prevPage" onclick="prevPage()" disabled>Previous</button>
+    <button id="nextPage" onclick="nextPage()">Next</button>
+</div>
+
+<script>
+    // JavaScript Pagination
+    var table = document.getElementById("clientTable");
+    var rowsPerPage = 5; // Number of rows per page
+    var currentPage = 1;
+    var rows = Array.from(table.getElementsByTagName("tr"));
+    var totalRows = rows.length;
+    var totalPages = Math.ceil(totalRows / rowsPerPage);
+
+    // Ensure the table has rows to display
+    if (totalRows > 0) {
+        displayPage(currentPage); // Display the first page initially
+    }
+
+    function displayPage(page) {
+        // Hide all rows first
+        rows.forEach(row => row.style.display = 'none');
+
+        // Show only the rows for the current page
+        var start = (page - 1) * rowsPerPage;
+        var end = Math.min(start + rowsPerPage, totalRows);
+        for (var i = start; i < end; i++) {
+            rows[i].style.display = "table-row";
+        }
+
+        // Update button states
+        document.getElementById("prevPage").disabled = (page === 1);
+        document.getElementById("nextPage").disabled = (page === totalPages);
+    }
+
+    function nextPage() {
+        if (currentPage < totalPages) {
+            currentPage++;
+            displayPage(currentPage);
+        }
+    }
+
+    function prevPage() {
+        if (currentPage > 1) {
+            currentPage--;
+            displayPage(currentPage);
+        }
+    }
+</script>

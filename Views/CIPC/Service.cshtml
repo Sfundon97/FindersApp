@@ -132,13 +132,13 @@
 
 <h1 style="text-align: center;">Feedback</h1>
 <div class="profile-container">
-    <img src="@Model.Photo" alt="Profile Image" style="max-width: 100%; height: auto; border-radius: 50%;" />
+    <img src="~/images/DefaultPic.png" alt="Profile Image" style="max-width: 100%; height: auto; border-radius: 50%;" />
     <div class="profile-details">
-        <h2>NOMONDE BEAUTY</h2>
-        <h3>make up your mind</h3>
-        <p>Bloemfontein, Willows</p>
-        <p>Phone nr: @Model.</p>
-        <p>Registration Nr:</p>
+        <h2>@Model.CompanyName</h2>
+
+        <p>Address: @Model.Address</p>
+
+        <p>Registration Nr: @Model.RegistrationNumber</p>
         <div class="stars">
             <span>&#9733;</span>
             <span>&#9733;</span>

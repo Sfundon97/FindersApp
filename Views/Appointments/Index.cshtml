@@ -1,0 +1,213 @@
+﻿@model IEnumerable<Finders.Models.Appointments>
+
+@{
+    ViewData["Title"] = "Appointments";
+}
+
+<style>
+    h2 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 30px;
+    }
+
+    .my-table {
+        width: 100%;
+        border-collapse: collapse;
+        border-radius: 5px;
+        overflow: hidden;
+        box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+    }
+
+        .my-table th, .my-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .my-table th {
+            background-color: gray;
+            color: #fff;
+        }
+
+        .my-table tbody tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .my-table tbody tr:hover {
+            background-color: #e9ecef;
+        }
+
+    .search-container {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+
+    .search-input {
+        padding: 10px;
+        width: 300px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+
+    .search-button {
+        padding: 10px 15px;
+        margin-left: 10px;
+        background-color: gray;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .btn-back {
+        padding: 10px 15px;
+        margin-left: 10px;
+        background-color: gray;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .search-button:hover {
+        background-color: #555;
+    }
+
+    /* Pagination buttons */
+    .pagination-buttons {
+        text-align: center;
+        margin: 20px 0;
+    }
+
+        .pagination-buttons button {
+            padding: 10px 20px;
+            background-color: gray;
+            color: white;
+            border: none;
+            margin: 0 5px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+            .pagination-buttons button[disabled] {
+                background-color: lightgray;
+                cursor: not-allowed;
+            }
+</style>
+
+<h2>Appointments Database</h2>
+
+<!-- Search Form -->
+<div class="search-container">
+    <form asp-action="Index" method="get">
+        <input type="text" name="searchCompanyName" class="search-input" placeholder="Search by Company" value="@ViewData["CurrentFilter"]" />
+        <button type="submit" class="search-button">Search</button>
+    </form>
+   
+    <form asp-action="Index" method="get">
+        <button type="submit" class="btn-back">Back</button>
+    </form>
+</div>
+
+<table class="table my-table">
+    <thead>
+        <tr>
+            <th>Reference Number</th>
+            <th>Service Provider</th>
+            <th>Date</th>
+            <th>Amount</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody id="appointmentsTable">
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <img src="@item.Photo" width="50" height="50" style="border-radius: 50%; margin:5px;" />
+                    @item.ReferenceNumber
+                </td>
+                <td>@item.CompanyName</td>
+                <td>@item.Date</td>
+                <td>@item.Prices.First().ToString("C2")</td>
+                <td>
+                    @if (item.Status == "accepted")
+                    {
+                        <p style="color:forestgreen">@item.Status </p>
+                    }
+                    @if (item.Status == "rejected")
+                    {
+                        <p style="color:red">@item.Status </p>
+                    }
+                    @if (item.Status == "pending")
+                    {
+                        <p style="color:blue">@item.Status </p>
+                    }
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-documentId="@item.ReferenceNumber">View Details</a>
+                </td>
+
+            </tr>
+        }
+    </tbody>
+
+</table>
+
+@if (ViewBag.Message != null)
+{
+    <div class="no-results-message" style="text-align:center; color: red; font-size: 20px;" >@ViewBag.Message</div>
+}
+<!-- Pagination Controls -->
+<div class="pagination-buttons">
+    <button id="prevPage" onclick="prevPage()" disabled>Previous</button>
+    <button id="nextPage" onclick="nextPage()">Next</button>
+</div>
+
+<script>
+    // JavaScript Pagination
+    var table = document.getElementById("appointmentsTable");
+    var rowsPerPage = 5; // Number of rows per page
+    var currentPage = 1;
+    var rows = Array.from(table.getElementsByTagName("tr"));
+    var totalRows = rows.length;
+    var totalPages = Math.ceil(totalRows / rowsPerPage);
+
+    // Ensure the table has rows to display
+    if (totalRows > 0) {
+        displayPage(currentPage); // Display the first page initially
+    }
+
+    function displayPage(page) {
+        // Hide all rows first
+        rows.forEach(row => row.style.display = 'none');
+
+        // Show only the rows for the current page
+        var start = (page - 1) * rowsPerPage;
+        var end = Math.min(start + rowsPerPage, totalRows);
+        for (var i = start; i < end; i++) {
+            rows[i].style.display = "table-row";
+        }
+
+        // Update button states
+        document.getElementById("prevPage").disabled = (page === 1);
+        document.getElementById("nextPage").disabled = (page === totalPages);
+    }
+
+    function nextPage() {
+        if (currentPage < totalPages) {
+            currentPage++;
+            displayPage(currentPage);
+        }
+    }
+
+    function prevPage() {
+        if (currentPage > 1) {
+            currentPage--;
+            displayPage(currentPage);
+        }
+    }
+</script>

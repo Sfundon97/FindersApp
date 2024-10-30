@@ -19,7 +19,7 @@ namespace Finders.Controllers
         }
 
         // Index method for basic retrieval of all documents
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Index(string searchCompany)
         {
             var collection = _firestoreDb.Collection("Service Provider");

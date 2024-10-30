@@ -74,6 +74,27 @@
     .search-button:hover {
         background-color: #555;
     }
+
+    /* Pagination buttons */
+    .pagination-buttons {
+        text-align: center;
+        margin: 20px 0;
+    }
+
+        .pagination-buttons button {
+            padding: 10px 20px;
+            background-color: gray;
+            color: white;
+            border: none;
+            margin: 0 5px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+            .pagination-buttons button[disabled] {
+                background-color: lightgray;
+                cursor: not-allowed;
+            }
 </style>
 
 <h2>Service Provider Database</h2>
@@ -85,9 +106,7 @@
         <button type="submit" class="search-button">Search</button>
     </form>
     <form asp-action="Index" method="get">
-        <button type="submit" class="btn-back">
-            Back
-        </button>
+        <button type="submit" class="btn-back">Back</button>
     </form>
 </div>
 
@@ -102,11 +121,11 @@
             <th>Action</th>
         </tr>
     </thead>
-    <tbody>
+    <tbody id="serviceProviderTable">
         @foreach (var item in Model)
         {
             <tr>
-                <td style="margin:5px;">
+                <td>
                     @if (!string.IsNullOrEmpty(item.Photo))
                     {
                         <img src="@item.Photo" alt="Service Provider Image" style="width: 100px; height: auto;" />
@@ -116,19 +135,71 @@
                         <img src="~/images/DefaultPic.png" alt="Default Image" style="width: 100px; height: auto;" />
                     }
                     @item.CompanyName
-
                 </td>
                 <td>@item.Category</td>
                 <td>@item.Email</td>
                 <td>@item.DateJoined.ToShortDateString()</td>
                 <td>@item.RegistrationNumber</td>
                 <td>
-                    <button style="background-color:dodgerblue; color: white;border-radius:20%;"> <a asp-action="Service" asp-route-company="@item.CompanyName" style="border: none; background: none; color: white; font-weight: bold; text-decoration:none; ">View</a></button>
-                    
-                    
-                    <a asp-action="Details" asp-route-company="@item.CompanyName" style="border: none; background: none; color: #FF3B30; font-weight: bold;">View Details</a>
+                    <button style="background-color:dodgerblue; color: white;border-radius:10%;">
+                        <a asp-action="Service" asp-route-company="@item.CompanyName" style="border: none; background: none; color: white; font-weight: bold; text-decoration:none;">Feedback</a>
+                    </button>
+                    <button style="background-color:dodgerblue; color: white;border-radius:10%;">
+                        <a asp-action="Details" asp-route-company="@item.CompanyName" style="border: none; background: none; color: white; font-weight: bold; text-decoration:none;">Services</a>
+                    </button>
                 </td>
             </tr>
         }
     </tbody>
 </table>
+
+<!-- Pagination Controls -->
+<div class="pagination-buttons">
+    <button id="prevPage" onclick="prevPage()" disabled>Previous</button>
+    <button id="nextPage" onclick="nextPage()">Next</button>
+</div>
+
+<script>
+    // JavaScript Pagination
+    var table = document.getElementById("serviceProviderTable");
+    var rowsPerPage = 5;
+    var currentPage = 1;
+    var rows = table.getElementsByTagName("tr");
+    var totalRows = rows.length;
+    var totalPages = Math.ceil(totalRows / rowsPerPage);
+
+    function displayPage(page) {
+        // Hide all rows
+        for (var i = 0; i < totalRows; i++) {
+            rows[i].style.display = "none";
+        }
+
+        // Show the rows for the current page
+        var start = (page - 1) * rowsPerPage;
+        var end = page * rowsPerPage;
+        for (var i = start; i < end && i < totalRows; i++) {
+            rows[i].style.display = "table-row";
+        }
+
+        // Update button states
+        document.getElementById("prevPage").disabled = (page === 1);
+        document.getElementById("nextPage").disabled = (page === totalPages);
+    }
+
+    function nextPage() {
+        if (currentPage < totalPages) {
+            currentPage++;
+            displayPage(currentPage);
+        }
+    }
+
+    function prevPage() {
+        if (currentPage > 1) {
+            currentPage--;
+            displayPage(currentPage);
+        }
+    }
+
+    // Initial display
+    displayPage(currentPage);
+</script>

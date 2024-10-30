@@ -15,13 +15,21 @@ namespace Finders.Models
         [FirestoreProperty("companyName")]
         public string CompanyName { get; set; }
 
-        public string Rating { get; set; }
+        [FirestoreProperty("ratings")]
+        public int Rating { get; set; }
+        [FirestoreProperty("reviews")]
+        public string Review { get; set; }
+        [FirestoreProperty("ratingCount")]
+
+        public int RatingCount { get; set; }
 
         [FirestoreProperty("photo")]
-        public string Photo { get; set; }
-        public string PhotoUrl { get; set; }
-        public string ContentType {  get; set; }
-
+        public string Photo { get; set; } = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOuxrvcNMfGLh73uKP1QqYpKoCB0JLXiBMvA&s";
+        
+        [FirestoreProperty("price")]
+        public int? Price {  get; set; }
+        [FirestoreProperty("url")]
+        public List<string> Images { get; set; }
         [FirestoreProperty("dateJoined")]
         public DateTime DateJoined { get; set; }
 
