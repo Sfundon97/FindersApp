@@ -141,12 +141,15 @@
                 <td>@item.DateJoined.ToShortDateString()</td>
                 <td>@item.RegistrationNumber</td>
                 <td>
-                    <button style="background-color:dodgerblue; color: white;border-radius:10%;">
-                        <a asp-action="Service" asp-route-company="@item.CompanyName" style="border: none; background: none; color: white; font-weight: bold; text-decoration:none;">Feedback</a>
-                    </button>
+                    
                     <button style="background-color:dodgerblue; color: white;border-radius:10%;">
                         <a asp-action="Details" asp-route-company="@item.CompanyName" style="border: none; background: none; color: white; font-weight: bold; text-decoration:none;">Services</a>
                     </button>
+                    <button style="background-color:dodgerblue; color: white;border-radius:10%;">
+                        <a asp-action="Review" asp-route-serviceProviderId="@item.ProviderId" style="border: none; background: none; color: white; font-weight: bold; text-decoration:none;">View Reviews</a>
+                    </button>
+                 
+
                 </td>
             </tr>
         }

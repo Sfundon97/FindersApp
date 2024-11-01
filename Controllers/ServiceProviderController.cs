@@ -53,10 +53,7 @@ namespace Finders.Controllers
             return Redirect(imageUrl); // This will redirect to the image
         }
 
-        public async Task<IActionResult> Service(string company)
-        {
-            return await GetServiceProviderByCompanyName(company);
-        }
+        
 
         public async Task<IActionResult> Details(string company)
         {
@@ -99,5 +96,44 @@ namespace Finders.Controllers
                 return NotFound();
             }
         }
+
+        public async Task<IActionResult> Review(string serviceProviderId)
+        {
+            var reviewsSnapshot = await _firestoreDb.Collection("Reviews")
+                .WhereEqualTo("serviceProviderId", serviceProviderId)
+                .GetSnapshotAsync();
+
+            var reviews = reviewsSnapshot.Documents
+                .Select(doc => doc.ConvertTo<Models.ServiceProvider>())
+                .ToList();
+
+            return View(reviews);
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        public async Task<IActionResult> DeleteReview(string clientId)
+        {
+            var reviewsCollection = _firestoreDb.Collection("Reviews");
+            var query = reviewsCollection.WhereEqualTo("clientId", clientId);
+            var querySnapshot = await query.GetSnapshotAsync();
+
+            if (querySnapshot.Documents.Count > 0)
+            {
+                // Assuming clientId is unique for a specific review
+                var reviewToDelete = querySnapshot.Documents.FirstOrDefault();
+                await reviewToDelete.Reference.DeleteAsync();
+                return RedirectToAction("Index"); // Redirect to the Index after deletion
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
+
+
     }
+
+
 }

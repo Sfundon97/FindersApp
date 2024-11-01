@@ -1,0 +1,72 @@
+﻿@model Finders.Models.ServiceProvider
+
+
+@{
+    ViewBag.Title = "Delete Review Confirmation";
+}
+
+<style>
+    /* Styling for delete confirmation view */
+    .confirmation-container {
+        width: 50%;
+        margin: 100px auto;
+        padding: 20px;
+        background-color: #FFEBEE;
+        border-radius: 10px;
+        text-align: center;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+        .confirmation-container h2 {
+            color: #D32F2F;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+    .confirmation-message {
+        color: #555;
+        font-size: 1.1em;
+        margin: 15px 0;
+    }
+
+    .button-container {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        margin-top: 20px;
+    }
+
+    .confirm-btn, .cancel-btn {
+        padding: 10px 20px;
+        border-radius: 20px;
+        font-weight: bold;
+        text-transform: uppercase;
+        cursor: pointer;
+        border: none;
+        color: white;
+    }
+
+    .confirm-btn {
+        background-color: #D32F2F;
+    }
+
+    .cancel-btn {
+        background-color: #B0BCC5;
+    }
+</style>
+
+<div class="confirmation-container">
+    <h2>Delete Review</h2>
+    <p class="confirmation-message">Are you sure you want to delete this review? This action cannot be undone.</p>
+
+    <div class="button-container">
+        <form asp-action="DeleteReview" method="post">
+            <input type="hidden" name="review" value="@ViewBag.ReviewId" />
+            <button type="submit" class="confirm-btn">Yes, Delete</button>
+        </form>
+
+        <form asp-action="Index" method="get">
+            <button type="submit" class="cancel-btn">Cancel</button>
+        </form>
+    </div>
+</div>

@@ -23,8 +23,8 @@ namespace Finders.Models
 
         public int RatingCount { get; set; }
 
-        [FirestoreProperty("photo")]
-        public string Photo { get; set; } = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOuxrvcNMfGLh73uKP1QqYpKoCB0JLXiBMvA&s";
+        [FirestoreProperty("profilePicture")]
+        public string Photo { get; set; } 
         
         [FirestoreProperty("price")]
         public int? Price {  get; set; }
@@ -41,6 +41,24 @@ namespace Finders.Models
 
         [FirestoreProperty("service")]
         public string Service { get; set; }
+
+        [FirestoreProperty("clientId")]
+        public string ClientId { get; set; }
+
+        //Reviews Part
+        [FirestoreProperty("rating")]
+        public int Ratings { get; set; }
+        [FirestoreProperty("reviewText")]
+        public string ReviewText { get; set; }
+
+        [FirestoreProperty("username")]
+        public string Username { get; set; }
+
+        [FirestoreProperty("timestamp")]
+        public DateTime Timestamp { get; set; }
+
+        [FirestoreProperty("serviceProviderId")]
+        public string ProviderId { get; set; }
     }
 
     public class FirebaseStorageService

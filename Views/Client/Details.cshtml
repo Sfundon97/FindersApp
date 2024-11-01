@@ -10,13 +10,12 @@
     <!-- Profile Image -->
     @if (Model.Photo == null)
     {
-        <img src="@Model.DefaultPhoto width="100" alt="Profile Photo" style="border-radius: 10px;" />
+        <img src="@Model.DefaultPhoto" width="100" alt="Profile Photo" style="border-radius: 10px; height: auto;" />
     }
     else
     {
-        <img src="@Model.Photo width="100" alt="Profile Photo" style="border-radius: 10px;">
+        <img src="@Model.Photo" width="100" alt="Profile Photo" style="border-radius: 10px; height: auto;" />
     }
-    
 
     <!-- Name and Email Section -->
     <div>
@@ -26,6 +25,7 @@
         </a>
     </div>
 </div>
+
 
 <!-- Details Section -->
 <dl class="row" style="margin-top: 20px;">

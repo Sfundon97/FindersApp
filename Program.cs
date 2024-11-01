@@ -7,6 +7,7 @@ using Finders.Interfaces;
 using Finders.Models;
 using Finders.Repositories;
 using Google.Api;
+using Google.Cloud.Firestore;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
@@ -34,7 +35,7 @@ builder.Services.AddDbContext<SQLiteDBContext>(options =>
 options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddDbContext<LoginDBContext>(options =>
 options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
-
+builder.Services.AddSingleton(provider => FirestoreConfig.InitializeFirestore());
 builder.Services.AddDefaultIdentity<IdentityUser>(options => 
 options.SignIn.RequireConfirmedAccount = false)
     .AddRoles<IdentityRole>()
