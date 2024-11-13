@@ -21,7 +21,7 @@ namespace Finders.Controllers
                 model.EmailSent = true;
             }
           
-            return View(); // Or return an appropriate result.
+            return View();
         }
     }
 

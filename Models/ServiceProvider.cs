@@ -24,7 +24,8 @@ namespace Finders.Models
         public int RatingCount { get; set; }
 
         [FirestoreProperty("profilePicture")]
-        public string Photo { get; set; } 
+        public string Photo { get; set; }
+        public string DefaultPhoto { get; set; } = "https://static.vecteezy.com/system/resources/thumbnails/020/765/399/small_2x/default-profile-account-unknown-icon-black-silhouette-free-vector.jpg";
         
         [FirestoreProperty("price")]
         public int? Price {  get; set; }

@@ -12,11 +12,12 @@ namespace Finders.Controllers
         private readonly FirestoreDb _firestoreDb;
         private readonly FirebaseStorageService _firebaseStorageService;
 
-        public ServiceProviderController(FirebaseStorageService firebaseStorageService)
+        public ServiceProviderController(FirestoreDb firestoreDb, FirebaseStorageService firebaseStorageService)
         {
-            _firestoreDb = FirestoreConfig.InitializeFirestore();
+            _firestoreDb = firestoreDb; 
             _firebaseStorageService = firebaseStorageService;
         }
+
 
         // Index method for basic retrieval of all documents
         [Authorize(Roles = "Admin")]

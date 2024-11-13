@@ -35,7 +35,12 @@ builder.Services.AddDbContext<SQLiteDBContext>(options =>
 options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddDbContext<LoginDBContext>(options =>
 options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
-builder.Services.AddSingleton(provider => FirestoreConfig.InitializeFirestore());
+builder.Services.AddSingleton<FirestoreConfig>();
+builder.Services.AddSingleton(provider =>
+{
+    var firestoreConfig = provider.GetRequiredService<FirestoreConfig>();
+    return firestoreConfig.InitializeFirestore();
+});
 builder.Services.AddDefaultIdentity<IdentityUser>(options => 
 options.SignIn.RequireConfirmedAccount = false)
     .AddRoles<IdentityRole>()

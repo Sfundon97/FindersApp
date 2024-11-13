@@ -2,6 +2,7 @@
 using Google.Cloud.Firestore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 
 namespace Finders.Controllers
 {
@@ -9,14 +10,12 @@ namespace Finders.Controllers
     {
         private readonly FirestoreDb _firestoreDb;
 
-        public AppointmentsController()
+        // Modify the constructor to accept FirestoreConfig as a parameter
+        public AppointmentsController(FirestoreConfig firestoreConfig)
         {
-            // Initialize FirestoreDb using the FirestoreConfig helper method
-            _firestoreDb = FirestoreConfig.InitializeFirestore();
+            // Use FirestoreConfig to initialize FirestoreDb
+            _firestoreDb = firestoreConfig.InitializeFirestore();
         }
-
-
-
 
         // Index method with search functionality
         [Authorize(Roles = "Admin")]
@@ -54,7 +53,6 @@ namespace Finders.Controllers
             return View(appointments);
         }
 
-
         public async Task<IActionResult> Details(string documentId)
         {
             try
@@ -76,9 +74,5 @@ namespace Finders.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
-
-
     }
 }
-
-

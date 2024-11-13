@@ -2,6 +2,8 @@
 using Google.Cloud.Firestore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
+using System.Linq;
 
 namespace Finders.Controllers
 {
@@ -10,9 +12,11 @@ namespace Finders.Controllers
         private readonly FirestoreDb _firestoreDb;
         private readonly FirebaseStorageService _firebaseStorageService;
 
-        public CIPCController(FirebaseStorageService firebaseStorageService)
+        // Modify the constructor to accept FirestoreConfig and FirebaseStorageService as parameters
+        public CIPCController(FirestoreConfig firestoreConfig, FirebaseStorageService firebaseStorageService)
         {
-            _firestoreDb = FirestoreConfig.InitializeFirestore();
+            // Use FirestoreConfig to initialize FirestoreDb
+            _firestoreDb = firestoreConfig.InitializeFirestore();
             _firebaseStorageService = firebaseStorageService;
         }
 
@@ -22,7 +26,7 @@ namespace Finders.Controllers
             var collection = _firestoreDb.Collection("CIPC");
             Query query = collection;
 
-            // Apply filter if searchSurname is provided
+            // Apply filter if searchCompany is provided
             if (!string.IsNullOrEmpty(searchCompany))
             {
                 query = collection.WhereEqualTo("companyName", searchCompany);

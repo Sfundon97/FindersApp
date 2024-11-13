@@ -119,15 +119,15 @@
 
     .image-scroll-container {
         display: flex;
-        overflow-x: auto; /* Enable horizontal scrolling */
-        padding: 10px 0; /* Add some vertical padding */
-        gap: 10px; /* Space between images */
+        overflow-x: auto;
+        padding: 10px 0; 
+        gap: 10px; 
     }
 
         .image-scroll-container img {
-            height: 150px; /* Set a fixed height for images */
-            object-fit: cover; /* Ensure images cover their area */
-            border-radius: 10px; /* Optional: add some border radius */
+            height: 150px; 
+            object-fit: cover; 
+            border-radius: 10px;
         }
 </style>
 
@@ -143,12 +143,22 @@
     <hr />
     <!-- Scrollable Banner Section for Images -->
     <div class="image-scroll-container" style="border: 3px solid navy; border-radius: 10px; padding: 10px;">
-        @foreach (var imageUrl in Model.Images)
+        @if (Model.Images != null && Model.Images.Any())
         {
-            <a href="@imageUrl">
-                <img src="@imageUrl" alt="Service Provider Image" class="banner-image" />
-            </a>
+            @foreach (var imageUrl in Model.Images)
+            {
+                <a href="@imageUrl">
+                    <img src="@imageUrl" alt="Service Provider Image" class="banner-image" />
+                </a>
+            }
         }
+        else
+        {
+            <p>No images available.</p>
+        }
+
+        
+      
     </div>
 
 

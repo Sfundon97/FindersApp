@@ -4,6 +4,7 @@ using Finders.Models;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using System.Collections.Generic;
 
 namespace Finders.Controllers
 {
@@ -11,10 +12,10 @@ namespace Finders.Controllers
     {
         private readonly FirestoreDb _firestoreDb;
 
-        public ClientController()
+        // Modify the constructor to accept FirestoreConfig via dependency injection
+        public ClientController(FirestoreConfig firestoreConfig)
         {
-            // Initialize FirestoreDb using the FirestoreConfig helper method
-            _firestoreDb = FirestoreConfig.InitializeFirestore();
+            _firestoreDb = firestoreConfig.InitializeFirestore();
         }
 
         [HttpPost]
@@ -48,8 +49,6 @@ namespace Finders.Controllers
             return RedirectToAction("FAQ");
         }
 
-
-
         [HttpGet]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> FAQ()
@@ -74,10 +73,6 @@ namespace Finders.Controllers
             // Pass the retrieved FAQs to the view
             return View(faqsList);
         }
-
-
-
-
 
         // Index method with search functionality
         [Authorize(Roles = "Admin")]
@@ -118,6 +113,7 @@ namespace Finders.Controllers
                 return NotFound();
             }
         }
+
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(string surname)
         {
