@@ -125,20 +125,20 @@
 </style>
 
 
-<h1>Database</h1>
+<h1>Admin Database</h1>
 
 <body>
-    <!-- The form for searching for a student using student number -->
+ 
 <form asp-action="Index" method="get">
     <div class="form-actions no-color">
         <p>
-            Search by Service Provider Reg Number: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
+            Search by Staff Number: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
             <input type="submit" value="Search" class="btn btn-default" /> |
             <a asp-action="Index">Back</a>
         </p>
     </div>
 </form>
-<!--Student data table-->
+<!--Admin data table-->
 <table class="table">
     <thead>
         <tr>

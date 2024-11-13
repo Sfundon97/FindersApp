@@ -1,4 +1,4 @@
-﻿// Programmer name : S Nondwatyu
+﻿// Programmer name : S Nondwatyu and S Jonga
 // Purpose : The purpose of this FindersController is to provide basic functionality
 // for rendering views and CRUD operations.
 
